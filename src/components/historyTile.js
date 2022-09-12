@@ -24,7 +24,7 @@ const HistoryTile = ({ episode, seriesName }) => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     padding: 15,
     borderRadius: 20,
     overflow: 'hidden',

@@ -31,8 +31,8 @@ const SeriesCard = ({ series }) => {
 const styles = StyleSheet.create({
   container: {
     height: 420,
-    overflow: "hidden",
     borderRadius: 30,
+    overflow: "hidden",
   },
 
   image: {
