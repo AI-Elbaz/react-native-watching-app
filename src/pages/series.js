@@ -10,11 +10,11 @@ const Series = ({ route }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <StatusBar backgroundColor='#0000004d' translucent/>
+      <StatusBar backgroundColor='transparent' translucent animated/>
       <FlatList
+        data={episodes}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={<SeriesHeader series={series} />}
-        data={episodes}
         keyExtractor={item => item.id}
         renderItem={({ item }) => <EpisodeTile key={item.id} episode={item} />}
       />

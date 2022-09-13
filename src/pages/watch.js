@@ -37,11 +37,14 @@ const Watch = ({ route }) => {
 
   return (
     <BottomSheetModalProvider>
-      <StatusBar backgroundColor='black'/>
-      <Player
-        sheetRef={bottomSheetRef}
-        episode={currentEpisode}
-        handleIncomingVideo={_handleIncomingVideo} />
+      <StatusBar backgroundColor='transparent' translucent/>
+      <>
+        <View style={{height: StatusBar.currentHeight, backgroundColor: 'black'}}></View>
+        <Player
+          episode={currentEpisode}
+          sheetRef={bottomSheetRef}
+          handleIncomingVideo={_handleIncomingVideo} />
+      </>
 
       <ScrollView style={styles.container}>
         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>

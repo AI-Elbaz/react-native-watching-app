@@ -12,12 +12,14 @@ import Icon from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import { HistoryContext } from "../contexts/historyContext";
 import { SharedElement } from "react-navigation-shared-element";
+import { SeriesContext } from "../contexts/seriesContext";
 
 const SeriesHeader = ({ series }) => {
   const { colors } = useTheme();
   const { history } = useContext(HistoryContext);
   const navigation = useNavigation();
-  const lastEpisode = history.filter(ep => ep.seriesId === series.id && ep.watchPercentage !== 1)[0];
+  const episodes = useContext(SeriesContext).episodes.filter(ep => ep.seriesId === series.id);
+  const lastEpisode = history.filter(ep => ep.seriesId === series.id && ep.watchPercentage !== 1);
 
   return (
     <>
@@ -32,7 +34,7 @@ const SeriesHeader = ({ series }) => {
       </View>
       <Pressable
         android_ripple={{ foreground: true, borderless: false }}
-        onPress={() => navigation.navigate('Watch', { episode: lastEpisode })}
+        onPress={() => navigation.navigate('Watch', { episode: lastEpisode.length > 0 ? lastEpisode[0] : episodes[0] })}
         style={styles.playBtn}>
         <Icon name="play" size={32} color={colors.placeholder} />
       </Pressable>
@@ -46,15 +48,15 @@ const styles = StyleSheet.create({
     height: 400,
     elevation: 10,
     overflow: 'hidden',
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 80,
+    borderBottomRightRadius: 80,
   },
 
   image: {
     width: '100%',
     height: '100%',
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 80,
+    borderBottomRightRadius: 80,
   },
 
   gradient: {
@@ -79,11 +81,13 @@ const styles = StyleSheet.create({
 
   playBtn: {
     padding: 15,
+    alignItems: 'center',
     borderRadius: 100,
+    flexDirection: 'row',
     overflow: 'hidden',
     alignSelf: 'flex-end',
+    marginRight: 60,
     backgroundColor: 'white',
-    marginRight: 50,
     marginTop: -40,
     elevation: 5
   },

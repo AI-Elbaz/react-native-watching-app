@@ -2,13 +2,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { View, Text, Pressable, StyleSheet, StatusBar, useWindowDimensions } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
-// import * as ScreenOrientation from 'expo-screen-orientation';
-import Orientation from "react-native-orientation-locker";
 import Video from "react-native-video";
 import Slider from '@react-native-community/slider';
+import Icon from "react-native-vector-icons/Feather";
+import Orientation from "react-native-orientation-locker";
 import { HistoryContext } from "../contexts/historyContext";
 import { PlayerOptionsContext } from "../contexts/playerOptionsContext";
-import Icon from "react-native-vector-icons/Feather";
 
 const Player = ({ episode, handleIncomingVideo, sheetRef }) => {
   const videoRef = useRef(null);
