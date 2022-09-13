@@ -4,7 +4,6 @@ import {
   Text,
   View,
   ScrollView,
-  Pressable,
   StatusBar,
 } from 'react-native';
 import { Colors } from "react-native-paper";
@@ -13,11 +12,11 @@ import { HistoryContext } from '../contexts/historyContext';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Player from '../components/player';
 import PlayerOptions from '../components/playerOptions';
+import ExpandableText from '../components/expandableText';
 
 const Watch = ({ route }) => {
   const { episode } = route.params;
   const [currentEpisode, setCurrentEpisode] = useState(episode);
-  const [showDescription, setShowDescription] = useState(false);
   const { history } = useContext(HistoryContext);
   const episodes = useContext(SeriesContext).episodes.filter(ep => ep.seriesId === currentEpisode.seriesId);
   const series = useContext(SeriesContext).series[currentEpisode.seriesId];
@@ -37,9 +36,9 @@ const Watch = ({ route }) => {
 
   return (
     <BottomSheetModalProvider>
-      <StatusBar backgroundColor='transparent' translucent/>
+      <StatusBar backgroundColor='transparent' translucent />
       <>
-        <View style={{height: StatusBar.currentHeight, backgroundColor: 'black'}}></View>
+        <View style={{ height: StatusBar.currentHeight, backgroundColor: 'black' }}></View>
         <Player
           episode={currentEpisode}
           sheetRef={bottomSheetRef}
@@ -50,10 +49,9 @@ const Watch = ({ route }) => {
         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
           <Text style={{ color: Colors.grey600 }}>{series.title} | E{currentEpisode.id.toString().padStart(2, "0")}</Text>
           <Text style={styles.title}>{currentEpisode.title}</Text>
-          <Pressable onPress={() => setShowDescription(!showDescription)}>
-            <Text style={styles.description} numberOfLines={showDescription ? undefined : 5}>{currentEpisode.description}</Text>
-            <Text style={styles.showMoreBtn}>{showDescription ? "SHOW LESS" : "SHOW MORE"}</Text>
-          </Pressable>
+          <ExpandableText numberOfLines={4} style={styles.description}>
+            {currentEpisode.description}
+          </ExpandableText>
         </View>
       </ScrollView>
       <PlayerOptions sheetRef={bottomSheetRef} />
@@ -80,6 +78,7 @@ const styles = StyleSheet.create({
 
   description: {
     fontSize: 16,
+    lineHeight: 22,
     color: Colors.grey800
   },
 
