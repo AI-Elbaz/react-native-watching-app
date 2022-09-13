@@ -17,7 +17,7 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={{justifyContent: 'space-between', flexGrow: 1}} showsVerticalScrollIndicator={false}>
-        <StatusBar backgroundColor='white' translucent/>
+        <StatusBar backgroundColor='white' />
         <View style={styles.header}>
           <Pressable
             onPress={() => navigation.navigate('Search')}
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: StatusBar.currentHeight,
   },
 
   header: {

@@ -9,10 +9,10 @@ const EpisodeTile = ({ episode }) => {
     <Pressable
       onPress={() => navigation.navigate('Watch', { episode })}
       android_ripple={{ foreground: true, borderless: false, color: Colors.grey500 }}>
-      <View style={{ ...styles.container, backgroundColor: (episode.id -1) % 2 ? Colors.grey50 : 'transparent' }}>
+      <View style={{ ...styles.container, backgroundColor: (episode.id - 1) % 2 ? Colors.grey50 : 'transparent' }}>
         <Text style={styles.episodeNumber}>{episode.id.toString().padStart(2, '0')}</Text>
         <View style={{ alignItems: 'flex-start', flexShrink: 1 }}>
-          <Text style={{ fontSize: 18, textTransform: 'capitalize' }} numberOfLines={2}>{episode.title}</Text>
+          <Text style={styles.title} numberOfLines={2}>{episode.title}</Text>
           <Text style={{ color: Colors.grey600 }} numberOfLines={2}>{episode.description}</Text>
         </View>
       </View>
@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
     letterSpacing: -5,
     color: Colors.grey300,
   },
+
+  title: {
+    fontSize: 18,
+    textTransform: 'capitalize',
+    color: 'black'
+  }
 });
 
 export default EpisodeTile;

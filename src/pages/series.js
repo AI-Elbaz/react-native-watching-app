@@ -10,7 +10,7 @@ const Series = ({ route }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <StatusBar backgroundColor='#0000004d' />
+      <StatusBar backgroundColor='#0000004d' translucent/>
       <FlatList
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={<SeriesHeader series={series} />}
