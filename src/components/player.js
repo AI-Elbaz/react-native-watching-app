@@ -41,8 +41,8 @@ const Player = ({ episode, handleIncomingVideo, sheetRef }) => {
   }, [episode]);
 
   useEffect(() => {
-    Orientation.addOrientationListener(orientation =>
-      setFullscreen(orientation === 'LANDSCAPE')
+    Orientation.addDeviceOrientationListener(orientation =>
+      setFullscreen(orientation.startsWith('LANDSCAPE'))
     );
 
     return () => {
@@ -72,7 +72,6 @@ const Player = ({ episode, handleIncomingVideo, sheetRef }) => {
     else Orientation.lockToPortrait();
 
     StatusBar.setHidden(fullscreen);
-    Orientation.unlockAllOrientations();
   }, [fullscreen]);
 
   useEffect(() => {
@@ -158,105 +157,108 @@ const Player = ({ episode, handleIncomingVideo, sheetRef }) => {
   }
 
   return (
-    <View style={[
-      styles.container,
-      { height: Dimensions.width * 9 / 16 },
-      fullscreen ? {
-        marginTop: 0,
-        width: Dimensions.width,
-        height: Dimensions.height,
-      } : null
-    ]}>
-      <Video
-        ref={videoRef}
-        paused={paused}
-        rate={options.playbackSpeed}
-        repeat={options.repeat}
-        onError={(err) => console.log('error', err)}
-        onProgress={_onProgress}
-        onLoad={_handleVideoLoaded}
-        onEnd={_handleVideoEnd}
-        style={StyleSheet.absoluteFill}
-        source={{ uri: currentSource && currentSource.file }}
-      />
-      <TapGestureHandler onHandlerStateChange={_handleSingleTap} waitFor={doubleTapRef}>
-        <TapGestureHandler ref={doubleTapRef} numberOfTaps={2} onHandlerStateChange={_handleDoubleTap}>
-          <View
-            style={{ ...StyleSheet.absoluteFill, backgroundColor: showControls ? '#00000073' : 'transparent' }}>
-          </View>
+    <>
+      {!fullscreen && <View style={{ height: StatusBar.currentHeight, backgroundColor: 'black' }}></View>}
+      <View style={[
+        styles.container,
+        { height: Dimensions.width * 9 / 16 },
+        fullscreen ? {
+          marginTop: 0,
+          width: Dimensions.width,
+          height: Dimensions.height,
+        } : null
+      ]}>
+        <Video
+          ref={videoRef}
+          paused={paused}
+          rate={options.playbackSpeed}
+          repeat={options.repeat}
+          onError={(err) => console.log('error', err)}
+          onProgress={_onProgress}
+          onLoad={_handleVideoLoaded}
+          onEnd={_handleVideoEnd}
+          style={StyleSheet.absoluteFill}
+          source={{ uri: currentSource && currentSource.file }}
+        />
+        <TapGestureHandler onHandlerStateChange={_handleSingleTap} waitFor={doubleTapRef}>
+          <TapGestureHandler ref={doubleTapRef} numberOfTaps={2} onHandlerStateChange={_handleDoubleTap}>
+            <View
+              style={{ ...StyleSheet.absoluteFill, backgroundColor: showControls ? '#00000073' : 'transparent' }}>
+            </View>
+          </TapGestureHandler>
         </TapGestureHandler>
-      </TapGestureHandler>
-      {videoLoading && <ActivityIndicator
-        size={48}
-        color="white"
-        animating={true}
-        style={[StyleSheet.absoluteFill, styles.center]} />}
-      {showControls && !videoLoading && <View style={[StyleSheet.absoluteFill, styles.center]}>
-        <View style={{
-          ...StyleSheet.absoluteFill,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <Pressable
-            disabled={episode.id === 1}
-            onPress={() => _handleIncomingVideo('previous')}
-            style={{ backgroundColor: '#00000066', padding: 12, borderRadius: 50, opacity: episode.id === 1 ? 0.5 : null, overflow: 'hidden' }}
-            android_ripple={{ foreground: true, borderless: false }}>
-            <Icon name="skip-back" size={20} color="white" />
-          </Pressable>
-
-          <Pressable
-            onPress={() => setPaused(prev => !prev)}
-            style={{ backgroundColor: '#00000066', padding: 12, marginHorizontal: 35, borderRadius: 50, overflow: 'hidden' }}
-            android_ripple={{ foreground: true, borderless: false }}>
-            <Icon name={paused ? "play" : "pause"} size={32} color="white" />
-          </Pressable>
-
-          <Pressable
-            onPress={() => _handleIncomingVideo('next')}
-            style={{ backgroundColor: '#00000066', padding: 12, borderRadius: 50, overflow: 'hidden' }}
-            android_ripple={{ foreground: true, borderless: false }}>
-            <Icon name="skip-forward" size={20} color="white" />
-          </Pressable>
-        </View>
-        <View style={styles.bar}>
-          <View style={{ flexDirection: "row", alignItems: 'center', paddingHorizontal: fullscreen ? 24 : 12, paddingBottom: 5 }}>
-            <Pressable onPress={() => setNegativeTime(prev => !prev)} style={{ marginRight: 'auto' }}>
-              <Text style={{ color: "white" }}>
-                {currentTime === 0 ? "0:00" :
-                  negativeTime ? "-" + divmod(duration - currentTime).join(":")
-                    : divmod(currentTime).join(":")} /&nbsp;
-                {duration === 0 ? "0:00" : divmod(duration).join(":")}
-              </Text>
-            </Pressable>
-            {sources && <Pressable
-              onPress={() => sheetRef.current.present()}
-              style={{ marginRight: 16 }}
-              android_ripple={{ foreground: true, borderless: true, color: 'white' }}>
-              <Icon name="settings" size={20} color="white" />
-            </Pressable>}
+        {videoLoading && <ActivityIndicator
+          size={48}
+          color="white"
+          animating={true}
+          style={[StyleSheet.absoluteFill, styles.center]} />}
+        {showControls && !videoLoading && <View style={[StyleSheet.absoluteFill, styles.center]}>
+          <View style={{
+            ...StyleSheet.absoluteFill,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
             <Pressable
-              onPress={() => setFullscreen(prev => !prev)}
-              android_ripple={{ foreground: true, borderless: true, color: 'white' }}>
-              <Icon name={fullscreen ? "minimize" : "maximize"} size={20} color="white" />
+              disabled={episode.id === 1}
+              onPress={() => _handleIncomingVideo('previous')}
+              style={{ backgroundColor: '#00000066', padding: 12, borderRadius: 50, opacity: episode.id === 1 ? 0.5 : null, overflow: 'hidden' }}
+              android_ripple={{ foreground: true, borderless: false }}>
+              <Icon name="skip-back" size={20} color="white" />
+            </Pressable>
+
+            <Pressable
+              onPress={() => setPaused(prev => !prev)}
+              style={{ backgroundColor: '#00000066', padding: 12, marginHorizontal: 35, borderRadius: 50, overflow: 'hidden' }}
+              android_ripple={{ foreground: true, borderless: false }}>
+              <Icon name={paused ? "play" : "pause"} size={32} color="white" />
+            </Pressable>
+
+            <Pressable
+              onPress={() => _handleIncomingVideo('next')}
+              style={{ backgroundColor: '#00000066', padding: 12, borderRadius: 50, overflow: 'hidden' }}
+              android_ripple={{ foreground: true, borderless: false }}>
+              <Icon name="skip-forward" size={20} color="white" />
             </Pressable>
           </View>
-          <Slider
-            value={currentTime}
-            minimumValue={0}
-            maximumValue={duration}
-            onSlidingStart={() => setIsSliding(true)}
-            onValueChange={(v) => setCurrentTime(v)}
-            onSlidingComplete={_handleSliderComplete}
-            style={{ width: '100%' }}
-            thumbTintColor={Colors.red600}
-            minimumTrackTintColor={Colors.red600}
-            maximumTrackTintColor="white"
-          />
-        </View>
-      </View>}
-    </View>
+          <View style={styles.bar}>
+            <View style={{ flexDirection: "row", alignItems: 'center', paddingHorizontal: fullscreen ? 24 : 12, paddingBottom: 5 }}>
+              <Pressable onPress={() => setNegativeTime(prev => !prev)} style={{ marginRight: 'auto' }}>
+                <Text style={{ color: "white" }}>
+                  {currentTime === 0 ? "0:00" :
+                    negativeTime ? "-" + divmod(duration - currentTime).join(":")
+                      : divmod(currentTime).join(":")} /&nbsp;
+                  {duration === 0 ? "0:00" : divmod(duration).join(":")}
+                </Text>
+              </Pressable>
+              {sources && <Pressable
+                onPress={() => sheetRef.current.present()}
+                style={{ marginRight: 16 }}
+                android_ripple={{ foreground: true, borderless: true, color: 'white' }}>
+                <Icon name="settings" size={20} color="white" />
+              </Pressable>}
+              <Pressable
+                onPress={() => setFullscreen(prev => !prev)}
+                android_ripple={{ foreground: true, borderless: true, color: 'white' }}>
+                <Icon name={fullscreen ? "minimize" : "maximize"} size={20} color="white" />
+              </Pressable>
+            </View>
+            <Slider
+              value={currentTime}
+              minimumValue={0}
+              maximumValue={duration}
+              onSlidingStart={() => setIsSliding(true)}
+              onValueChange={(v) => setCurrentTime(v)}
+              onSlidingComplete={_handleSliderComplete}
+              style={{ width: '100%' }}
+              thumbTintColor={Colors.red600}
+              minimumTrackTintColor={Colors.red600}
+              maximumTrackTintColor="white"
+            />
+          </View>
+        </View>}
+      </View>
+    </>
   );
 }
 

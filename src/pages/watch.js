@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext, useEffect, useRef, useMemo } from 'react';
 import {
   StyleSheet,
   Text,
@@ -37,21 +37,19 @@ const Watch = ({ route }) => {
   return (
     <BottomSheetModalProvider>
       <StatusBar backgroundColor='transparent' translucent />
-      <>
-        <View style={{ height: StatusBar.currentHeight, backgroundColor: 'black' }}></View>
-        <Player
-          episode={currentEpisode}
-          sheetRef={bottomSheetRef}
-          handleIncomingVideo={_handleIncomingVideo} />
-      </>
+
+      <Player
+        episode={currentEpisode}
+        sheetRef={bottomSheetRef}
+        handleIncomingVideo={_handleIncomingVideo} />
 
       <ScrollView style={styles.container}>
         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
           <Text style={{ color: Colors.grey600 }}>{series.title} | E{currentEpisode.id.toString().padStart(2, "0")}</Text>
           <Text style={styles.title}>{currentEpisode.title}</Text>
-          <ExpandableText numberOfLines={4} style={styles.description}>
+          {useMemo(() => <ExpandableText numberOfLines={4} style={styles.description}>
             {currentEpisode.description}
-          </ExpandableText>
+          </ExpandableText>, [currentEpisode.description])}
         </View>
       </ScrollView>
       <PlayerOptions sheetRef={bottomSheetRef} />
