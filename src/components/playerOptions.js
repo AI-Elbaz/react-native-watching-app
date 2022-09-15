@@ -143,11 +143,13 @@ const styles = StyleSheet.create({
 
   tileTitle: {
     fontSize: 16,
-    color: Colors.grey700
+    color: Colors.grey700,
+    fontFamily: 'YouTubeSansSemibold'
   },
 
   tileValue: {
-    color: Colors.grey700
+    color: Colors.grey700,
+    fontFamily: 'YouTubeSansRegular'
   }
 });
 

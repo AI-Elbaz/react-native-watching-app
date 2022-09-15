@@ -45,7 +45,7 @@ const Watch = ({ route }) => {
 
       <ScrollView style={styles.container}>
         <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
-          <Text style={{ color: Colors.grey600 }}>{series.title} | E{currentEpisode.id.toString().padStart(2, "0")}</Text>
+          <Text style={styles.seriesName}>{series.title} | E{currentEpisode.id.toString().padStart(2, "0")}</Text>
           <Text style={styles.title}>{currentEpisode.title}</Text>
           {useMemo(() => <ExpandableText numberOfLines={4} style={styles.description}>
             {currentEpisode.description}
@@ -67,24 +67,25 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.grey900,
   },
 
+  seriesName: {
+    fontSize: 16,
+    color: Colors.grey600,
+    fontFamily: 'YouTubeSansRegular',
+  },
+
   title: {
-    fontSize: 24,
-    marginVertical: 5,
+    fontSize: 22,
     color: Colors.grey800,
     textTransform: 'capitalize',
+    fontFamily: 'YouTubeSansSemibold'
   },
 
   description: {
     fontSize: 16,
     lineHeight: 22,
-    color: Colors.grey800
+    color: Colors.grey800,
+    fontFamily: 'YouTubeSansRegular'
   },
-
-  showMoreBtn: {
-    marginVertical: 5,
-    fontWeight: '500',
-    color: Colors.blueA200,
-  }
 });
 
 export default Watch;

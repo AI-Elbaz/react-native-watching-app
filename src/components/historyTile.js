@@ -34,16 +34,19 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 20,
-    color: 'black',
+    color: Colors.grey800,
     textTransform: 'capitalize',
+    fontFamily: 'YouTubeSansSemibold',
   },
 
   seriesName: {
-    color: Colors.grey600
+    color: Colors.grey600,
+    fontFamily: 'YouTubeSansRegular',
   },
 
   description: {
-    color: Colors.grey800
+    color: Colors.grey800,
+    fontFamily: 'YouTubeSansRegular',
   },
 
   progressbarContainer: {

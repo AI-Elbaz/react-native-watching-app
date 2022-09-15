@@ -14,6 +14,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-ben10App-ben10AppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-ben10App-ben10AppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		0A8E04BD5F284A66846E4E7D /* YouTubeSansBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F145E5D2B9894C318CAC5E40 /* YouTubeSansBold.otf */; };
+		824ECB06D7404D41AB19BCC8 /* YouTubeSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2BE2097AB72B421FB7CEE1C5 /* YouTubeSansLight.otf */; };
+		3C4806070729469D8A9D486D /* YouTubeSansRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3346852B625B45EF917C45A9 /* YouTubeSansRegular.otf */; };
+		DBCFCEE57D96428A8A76B3D1 /* YouTubeSansSemibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8CD0BEF1C80E488EB3DA4245 /* YouTubeSansSemibold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ben10App/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ben10App-ben10AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ben10App-ben10AppTests.release.xcconfig"; path = "Target Support Files/Pods-ben10App-ben10AppTests/Pods-ben10App-ben10AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F145E5D2B9894C318CAC5E40 /* YouTubeSansBold.otf */ = {isa = PBXFileReference; name = "YouTubeSansBold.otf"; path = "../assets/fonts/YouTubeSansBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2BE2097AB72B421FB7CEE1C5 /* YouTubeSansLight.otf */ = {isa = PBXFileReference; name = "YouTubeSansLight.otf"; path = "../assets/fonts/YouTubeSansLight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3346852B625B45EF917C45A9 /* YouTubeSansRegular.otf */ = {isa = PBXFileReference; name = "YouTubeSansRegular.otf"; path = "../assets/fonts/YouTubeSansRegular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8CD0BEF1C80E488EB3DA4245 /* YouTubeSansSemibold.otf */ = {isa = PBXFileReference; name = "YouTubeSansSemibold.otf"; path = "../assets/fonts/YouTubeSansSemibold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +130,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				C7AE60A2B0AD47F896657B8D /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +156,18 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		C7AE60A2B0AD47F896657B8D /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				F145E5D2B9894C318CAC5E40 /* YouTubeSansBold.otf */,
+				2BE2097AB72B421FB7CEE1C5 /* YouTubeSansLight.otf */,
+				3346852B625B45EF917C45A9 /* YouTubeSansRegular.otf */,
+				8CD0BEF1C80E488EB3DA4245 /* YouTubeSansSemibold.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -244,6 +265,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				0A8E04BD5F284A66846E4E7D /* YouTubeSansBold.otf in Resources */,
+				824ECB06D7404D41AB19BCC8 /* YouTubeSansLight.otf in Resources */,
+				3C4806070729469D8A9D486D /* YouTubeSansRegular.otf in Resources */,
+				DBCFCEE57D96428A8A76B3D1 /* YouTubeSansSemibold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

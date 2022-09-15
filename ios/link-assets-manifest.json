@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/YouTubeSansBold.otf",
+      "sha1": "96c6ab233d07b4406ee91bdf7b699979c3d2922d"
+    },
+    {
+      "path": "assets/fonts/YouTubeSansLight.otf",
+      "sha1": "d909bc6284929e033643d36b2ec5b7f0729bbf7b"
+    },
+    {
+      "path": "assets/fonts/YouTubeSansRegular.otf",
+      "sha1": "65a7a483ddfd46f718d9f6afc37ca3b32b61fe60"
+    },
+    {
+      "path": "assets/fonts/YouTubeSansSemibold.otf",
+      "sha1": "abac9665ca9ee34a985d7be89b7c99080555db11"
+    }
+  ]
+}

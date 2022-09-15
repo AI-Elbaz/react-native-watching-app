@@ -70,13 +70,14 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: 'white',
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontFamily: 'YouTubeSansBold'
   },
 
   episodesNumber: {
     fontSize: 20,
     fontWeight: '300',
     color: Colors.grey400,
+    fontFamily: 'YouTubeSansRegular'
   },
 
   playBtn: {
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     paddingHorizontal: 20,
     color: Colors.grey600,
+    fontFamily: 'YouTubeSansRegular'
   },
 });
 

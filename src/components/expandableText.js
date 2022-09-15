@@ -58,10 +58,10 @@ const ExpandableText = ({ children, numberOfLines, animationDuration = 200, styl
 
 const styles = StyleSheet.create({
   toggleBtn: {
-    fontWeight: '500',
     marginVertical: 5,
     color: Colors.blueA200,
     textTransform: 'uppercase',
+    fontFamily: 'YouTubeSansSemibold'
   }
 });
 

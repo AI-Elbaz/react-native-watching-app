@@ -49,13 +49,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     color: 'white',
-    fontWeight: 'bold',
+    fontFamily: 'YouTubeSansBold',
   },
 
   episodes: {
     fontSize: 18,
-    fontWeight: '300',
-    color: Colors.grey500
+    color: Colors.grey500,
+    fontFamily: 'YouTubeSansRegular',
   }
 });
 

@@ -26,7 +26,7 @@ const Home = ({ navigation }) => {
             style={styles.button(colors.surface, roundness)}>
             <Icon name="search" size={26} color={colors.placeholder} />
           </Pressable>
-          <Text style={{ fontSize: 36, fontWeight: '300', color: 'black' }}>Ben 10</Text>
+          <Text style={{ fontSize: 36, fontWeight: '300', color: 'black', fontFamily: 'YouTubeSansRegular' }}>Ben 10</Text>
           <Pressable
             onPress={() => navigation.navigate('History')}
             android_ripple={{ foreground: true, borderless: false }}

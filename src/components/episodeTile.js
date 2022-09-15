@@ -13,7 +13,7 @@ const EpisodeTile = ({ episode }) => {
         <Text style={styles.episodeNumber}>{episode.id.toString().padStart(2, '0')}</Text>
         <View style={{ alignItems: 'flex-start', flexShrink: 1 }}>
           <Text style={styles.title} numberOfLines={2}>{episode.title}</Text>
-          <Text style={{ color: Colors.grey600 }} numberOfLines={2}>{episode.description}</Text>
+          <Text style={styles.description} numberOfLines={2}>{episode.description}</Text>
         </View>
       </View>
     </Pressable>
@@ -29,16 +29,25 @@ const styles = StyleSheet.create({
 
   episodeNumber: {
     fontSize: 64,
-    fontWeight: 'bold',
+    width: '20%',
+    textAlign: 'center',
+    lineHeight: 70,
     marginRight: 15,
-    letterSpacing: -5,
+    letterSpacing: -4,
     color: Colors.grey300,
+    fontFamily: 'YouTubeSansBold'
   },
 
   title: {
     fontSize: 18,
+    color: Colors.grey700,
     textTransform: 'capitalize',
-    color: 'black'
+    fontFamily: 'YouTubeSansSemibold'
+  },
+
+  description: {
+    color: Colors.grey600,
+    fontFamily: 'YouTubeSansRegular'
   }
 });
 

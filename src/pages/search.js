@@ -34,17 +34,17 @@ const Search = ({ navigation }) => {
           <TextInput
             value={query}
             autoFocus
-            clearButtonMode='always'
             onChangeText={setQuery}
             placeholder="Search"
-            style={styles.input}
-            selectionColor={colors.placeholder} />
+            placeholderTextColor={colors.placeholder}
+            selectionColor={colors.placeholder}
+            style={styles.input} />
           {query && <Icon name="x" size={24} color={colors.placeholder} onPress={() => setQuery('')} />}
         </View>
       </View>
       <FlatList
         data={result}
-        contentContainerStyle={{flexGrow: 1}}
+        contentContainerStyle={{ flexGrow: 1 }}
         style={{ paddingHorizontal: 15 }}
         ListEmptyComponent={<EmptyListView icon="search" text="Type something" />}
         keyExtractor={item => item.identifier}

@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: Colors.grey400,
     marginVertical: 32,
+    fontFamily: 'YouTubeSansRegular'
   }
 });
 
