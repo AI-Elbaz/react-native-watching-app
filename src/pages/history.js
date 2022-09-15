@@ -4,6 +4,7 @@ import { HistoryContext } from "../contexts/historyContext";
 import HistoryTile from "../components/historyTile";
 import { SeriesContext } from "../contexts/seriesContext";
 import { Button, Colors } from "react-native-paper";
+import EmptyListView from "../components/emptyListView";
 
 export const HistoryDeleteBtn = () => {
   const { history, clearHistory } = useContext(HistoryContext);
@@ -34,8 +35,9 @@ const History = () => {
     <FlatList
       data={history}
       style={styles.container}
+      contentContainerStyle={{flexGrow: 1}}
       showsVerticalScrollIndicator={false}
-      ListEmptyComponent={() => <Text>Empty</Text>}
+      ListEmptyComponent={<EmptyListView icon='clock' text="Have A Good Time" />}
       keyExtractor={(item) => item.identifier}
       ItemSeparatorComponent={() => <View style={{ height: 15 }}></View>}
       renderItem={({ item }) => <HistoryTile episode={item} seriesName={series[item.seriesId].title} />}

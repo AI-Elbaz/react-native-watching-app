@@ -7,7 +7,8 @@ import {
   ScrollView,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/Octicons';
+import Icon from 'react-native-vector-icons/Feather';
+import { default as Icon2 } from 'react-native-vector-icons/Octicons';
 import SeriesList from '../components/seriesList';
 import SuggestedEpisode from '../components/suggestedEpisode';
 
@@ -23,14 +24,14 @@ const Home = ({ navigation }) => {
             onPress={() => navigation.navigate('Search')}
             android_ripple={{ foreground: true, borderless: false }}
             style={styles.button(colors.surface, roundness)}>
-            <Icon name="search" size={24} color={colors.placeholder} style={{ paddingHorizontal: 2 }} />
+            <Icon name="search" size={26} color={colors.placeholder} />
           </Pressable>
           <Text style={{ fontSize: 36, fontWeight: '300', color: 'black' }}>Ben 10</Text>
           <Pressable
             onPress={() => navigation.navigate('History')}
             android_ripple={{ foreground: true, borderless: false }}
             style={styles.button(colors.surface, roundness)}>
-            <Icon name="history" size={24} color={colors.placeholder} style={{}} />
+            <Icon2 name="history" size={26} color={colors.placeholder} />
           </Pressable>
         </View>
         <SeriesList />

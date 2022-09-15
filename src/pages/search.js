@@ -4,6 +4,7 @@ import { IconButton, useTheme } from 'react-native-paper';
 import { SeriesContext } from '../contexts/seriesContext';
 import Icon from "react-native-vector-icons/Feather";
 import HistoryTile from '../components/historyTile';
+import EmptyListView from '../components/emptyListView';
 
 const Search = ({ navigation }) => {
   const { episodes } = useContext(SeriesContext);
@@ -43,7 +44,9 @@ const Search = ({ navigation }) => {
       </View>
       <FlatList
         data={result}
+        contentContainerStyle={{flexGrow: 1}}
         style={{ paddingHorizontal: 15 }}
+        ListEmptyComponent={<EmptyListView icon="search" text="Type something" />}
         keyExtractor={item => item.identifier}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={{ height: 15 }}></View>}

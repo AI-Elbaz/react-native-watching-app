@@ -36,7 +36,7 @@ const SeriesHeader = ({ series }) => {
         android_ripple={{ foreground: true, borderless: false }}
         onPress={() => navigation.navigate('Watch', { episode: lastEpisode.length > 0 ? lastEpisode[0] : episodes[0] })}
         style={styles.playBtn}>
-        <Icon name="play" size={32} color={colors.placeholder} />
+        <Icon name="play" size={36} color={colors.placeholder} />
       </Pressable>
       <Text style={styles.seriesDescription}>{series.description}</Text>
     </>
@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
 
   playBtn: {
     padding: 15,
-    alignItems: 'center',
     borderRadius: 100,
     flexDirection: 'row',
     overflow: 'hidden',

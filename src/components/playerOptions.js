@@ -19,7 +19,7 @@ const PlayerOptionTile = ({ title, icon, onPress, value }) => {
 }
 
 const PlayerOptions = ({ sheetRef }) => {
-  const snapPoints = useMemo(() => ['35%', '70%'], []);
+  const snapPoints = useMemo(() => ['43%', '70%'], []);
   const { options, availableQualities, setPlayerOptions, playbackSpeeds } = useContext(PlayerOptionsContext);
   const [showQualities, setShowQualities] = useState(false);
   const [showPlaybackSpeed, setShowplaybackSpeed] = useState(false);

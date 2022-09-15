@@ -46,6 +46,7 @@ const Player = ({ episode, handleIncomingVideo, sheetRef }) => {
     );
 
     return () => {
+      Orientation.unlockAllOrientations();
       Orientation.removeAllListeners();
       componentWillUnmount.current = true;
     }
