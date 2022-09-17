@@ -1,9 +1,9 @@
-import { createContext, useState, useEffect } from "react";
-import Storage from "../storage";
+import {createContext, useState, useEffect} from 'react';
+import Storage from '../storage';
 
 export const PlayerOptionsContext = createContext();
 
-const PlayerOptionsContextProvider = (props) => {
+const PlayerOptionsContextProvider = props => {
   const [options, setOptions] = useState(Storage.defaultOptions);
   const [availableQualities, setAvailableQualities] = useState([]);
 
@@ -11,7 +11,7 @@ const PlayerOptionsContextProvider = (props) => {
     Storage.getPlayerOptions().then(setOptions);
   }, []);
 
-  const setPlayerOptions = (opt) => {
+  const setPlayerOptions = opt => {
     let newOpt = opt;
 
     if (options.repeat !== newOpt.repeat) {
@@ -27,19 +27,20 @@ const PlayerOptionsContextProvider = (props) => {
     }
 
     Storage.setPlayerOptions(newOpt).then(setOptions);
-  }
+  };
 
   return (
-    <PlayerOptionsContext.Provider value={{
-      options,
-      setPlayerOptions,
-      availableQualities,
-      setAvailableQualities,
-      playbackSpeeds: Storage.playbackSpeeds
-    }}>
+    <PlayerOptionsContext.Provider
+      value={{
+        options,
+        setPlayerOptions,
+        availableQualities,
+        setAvailableQualities,
+        playbackSpeeds: Storage.playbackSpeeds,
+      }}>
       {props.children}
     </PlayerOptionsContext.Provider>
   );
-}
+};
 
 export default PlayerOptionsContextProvider;

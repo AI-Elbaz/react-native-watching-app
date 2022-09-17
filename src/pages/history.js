@@ -1,35 +1,39 @@
-import { useContext } from "react";
-import { StyleSheet, View, Text, FlatList, Alert } from "react-native";
-import { HistoryContext } from "../contexts/historyContext";
-import HistoryTile from "../components/historyTile";
-import { SeriesContext } from "../contexts/seriesContext";
-import { Button, Colors } from "react-native-paper";
-import EmptyListView from "../components/emptyListView";
+import {useContext} from 'react';
+import {StyleSheet, View, FlatList, Alert} from 'react-native';
+import {HistoryContext} from '../contexts/historyContext';
+import HistoryTile from '../components/historyTile';
+import {SeriesContext} from '../contexts/seriesContext';
+import {Button, Colors} from 'react-native-paper';
+import EmptyListView from '../components/emptyListView';
 
 export const HistoryDeleteBtn = () => {
-  const { history, clearHistory } = useContext(HistoryContext);
+  const {history, clearHistory} = useContext(HistoryContext);
 
   const confirmClearHistory = () =>
     Alert.alert(
-      "Notice",
-      "This action will delete your entire watch history permanently.",
+      'Notice',
+      'This action will delete your entire watch history permanently.',
       [
-        { text: "Cancel", style: "cancel" },
-        { text: "OK", onPress: clearHistory }
+        {text: 'Cancel', style: 'cancel'},
+        {text: 'OK', onPress: clearHistory},
       ],
-      { cancelable: true }
+      {cancelable: true},
     );
 
   return (
     <>
-      {history.length > 0 && <Button color={Colors.red400} onPress={confirmClearHistory}>clear</Button>}
+      {history.length > 0 && (
+        <Button color={Colors.red400} onPress={confirmClearHistory}>
+          clear
+        </Button>
+      )}
     </>
   );
-}
+};
 
 const History = () => {
-  const { history } = useContext(HistoryContext);
-  const { series } = useContext(SeriesContext);
+  const {history} = useContext(HistoryContext);
+  const {series} = useContext(SeriesContext);
 
   return (
     <FlatList
@@ -37,13 +41,17 @@ const History = () => {
       style={styles.container}
       contentContainerStyle={{flexGrow: 1}}
       showsVerticalScrollIndicator={false}
-      ListEmptyComponent={<EmptyListView icon='clock' text="Have A Good Time" />}
-      keyExtractor={(item) => item.identifier}
-      ItemSeparatorComponent={() => <View style={{ height: 15 }}></View>}
-      renderItem={({ item }) => <HistoryTile episode={item} seriesName={series[item.seriesId].title} />}
+      ListEmptyComponent={
+        <EmptyListView icon="clock" text="Have A Good Time" />
+      }
+      keyExtractor={item => item.identifier}
+      ItemSeparatorComponent={() => <View style={{height: 15}} />}
+      renderItem={({item}) => (
+        <HistoryTile episode={item} seriesName={series[item.seriesId].title} />
+      )}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

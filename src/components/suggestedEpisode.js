@@ -1,23 +1,23 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Colors, IconButton, useTheme } from "react-native-paper";
-import { SeriesContext } from "../contexts/seriesContext";
-import HistoryTile from "./historyTile";
+import {useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {Colors, IconButton, useTheme} from 'react-native-paper';
+import {SeriesContext} from '../contexts/seriesContext';
+import HistoryTile from './historyTile';
 
 const SuggestedEpisode = () => {
-  const { colors } = useTheme();
+  const {colors} = useTheme();
   const [random, setRandom] = useState(0);
-  const { series, episodes } = useContext(SeriesContext);
-  const episode = useMemo(() => episodes[random], [random]);
+  const {series, episodes} = useContext(SeriesContext);
+  const episode = useMemo(() => episodes[random], [episodes, random]);
 
-  const getRandom = () => {
+  const getRandom = useCallback(() => {
     // const random = (Math.random() * (max - min + 1) + min)
     return Math.floor(Math.random() * (episodes.length + 1));
-  }
+  }, [episodes]);
 
   useEffect(() => {
     setRandom(getRandom());
-  }, []);
+  }, [getRandom]);
 
   return (
     <View style={styles.container}>
@@ -29,10 +29,13 @@ const SuggestedEpisode = () => {
           onPress={() => setRandom(getRandom())}
         />
       </View>
-      <HistoryTile episode={episode} seriesName={series[episode.seriesId].title} />
+      <HistoryTile
+        episode={episode}
+        seriesName={series[episode.seriesId].title}
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.grey700,
     fontFamily: 'YouTubeSansRegular',
-  }
+  },
 });
 
 export default SuggestedEpisode;

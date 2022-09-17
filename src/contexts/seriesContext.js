@@ -1,10 +1,10 @@
-import { createContext } from "react";
+import {createContext} from 'react';
 
 export const SeriesContext = createContext();
 
-const SeriesContextProvider = (props) => {
-  const series = require("../data/series.min.json");
-  const episodes = require("../data/episodes.min.json");
+const SeriesContextProvider = props => {
+  const series = require('../data/series.min.json');
+  const episodes = require('../data/episodes.min.json');
 
   const posters = [
     require('../../assets/images/ben_10_classic.jpeg'),
@@ -13,13 +13,13 @@ const SeriesContextProvider = (props) => {
     require('../../assets/images/ben_10_omniverse.jpeg'),
   ];
 
-  series.forEach((s, i) => s.poster = posters[i]);
+  series.forEach((s, i) => (s.poster = posters[i]));
 
   return (
-    <SeriesContext.Provider value={{ series, episodes }}>
+    <SeriesContext.Provider value={{series, episodes}}>
       {props.children}
     </SeriesContext.Provider>
   );
-}
+};
 
-export default SeriesContextProvider
+export default SeriesContextProvider;
