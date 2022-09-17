@@ -2,7 +2,6 @@ import {Text, Pressable, StyleSheet, Image} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {SharedElement} from 'react-navigation-shared-element';
 
 const SeriesCard = ({series}) => {
   const navigation = useNavigation();
@@ -16,9 +15,7 @@ const SeriesCard = ({series}) => {
       }}
       onPress={() => navigation.navigate('Series', {series})}
       style={styles.container}>
-      <SharedElement id={`series.${series.id}.photo`}>
-        <Image source={series.poster} style={styles.image} resizeMode="cover" />
-      </SharedElement>
+      <Image source={series.poster} style={styles.image} resizeMode="cover" />
       <LinearGradient
         colors={['transparent', '#00000033', 'black']}
         style={[StyleSheet.absoluteFill, styles.gradient]}>

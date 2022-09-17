@@ -1,6 +1,6 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import {
   Colors,
@@ -16,10 +16,9 @@ import Home from './src/pages/home';
 import Search from './src/pages/search';
 import Series from './src/pages/series';
 import Watch from './src/pages/watch';
-import History, { HistoryDeleteBtn } from './src/pages/history';
+import History, {HistoryDeleteBtn} from './src/pages/history';
 
-const Stack = createSharedElementStackNavigator();
-
+const Stack = createNativeStackNavigator();
 const theme = {
   ...DefaultTheme,
   roundness: 15,
@@ -27,29 +26,33 @@ const theme = {
   version: 3,
   colors: {
     ...DefaultTheme.colors,
-    surface: Colors.grey100
+    surface: Colors.grey100,
   },
 };
 
 export default function App() {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{flex: 1}}>
       <PlayerOptionsContextProvider>
         <HistoryContextProvider>
           <SeriesContextProvider>
             <PaperProvider theme={theme}>
               <NavigationContainer>
-                <Stack.Navigator screenOptions={{ headerShown: false, orientation: 'portrait' }}>
+                <Stack.Navigator
+                  screenOptions={{headerShown: false, orientation: 'portrait'}}>
                   <Stack.Screen name="Home" component={Home} />
-                  <Stack.Screen name="History" component={History} options={{ headerShown: true, headerRight: HistoryDeleteBtn }} />
+                  <Stack.Screen
+                    name="History"
+                    component={History}
+                    options={{headerShown: true, headerRight: HistoryDeleteBtn}}
+                  />
                   <Stack.Screen name="Search" component={Search} />
-                  <Stack.Screen name="Series" component={Series} sharedElements={(route, otherRoute, showing) => {
-                    const { series } = route.params;
-                    return [{
-                      id: `series.${series.id}.photo`,
-                    }];
-                  }} />
-                  <Stack.Screen name="Watch" component={Watch} options={{ orientation: 'all' }} />
+                  <Stack.Screen name="Series" component={Series} />
+                  <Stack.Screen
+                    name="Watch"
+                    component={Watch}
+                    options={{orientation: 'all'}}
+                  />
                 </Stack.Navigator>
               </NavigationContainer>
             </PaperProvider>
