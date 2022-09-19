@@ -2,13 +2,13 @@ import {StyleSheet, Image, Pressable, Animated, StatusBar} from 'react-native';
 import {useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Colors, IconButton, useTheme} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/Feather';
 import {HistoryContext} from '../contexts/historyContext';
 import {SeriesContext} from '../contexts/seriesContext';
 
 const MAX_HEIGHT = 400;
-const MIN_HEIGHT = 85;
+const MIN_HEIGHT = 100;
 const DISTANCE = MAX_HEIGHT - MIN_HEIGHT;
 
 const SeriesHeader = ({series, animation}) => {
@@ -38,27 +38,15 @@ const SeriesHeader = ({series, animation}) => {
     extrapolate: 'clamp',
   });
 
-  const fontSize1 = animation.interpolate({
+  const scale = animation.interpolate({
     inputRange: [0, DISTANCE],
-    outputRange: [36, 24],
-    extrapolate: 'clamp',
-  });
-
-  const fontSize2 = animation.interpolate({
-    inputRange: [0, DISTANCE],
-    outputRange: [20, 16],
-    extrapolate: 'clamp',
-  });
-
-  const padding = animation.interpolate({
-    inputRange: [0, DISTANCE],
-    outputRange: [60, 0],
+    outputRange: [1, 0.7],
     extrapolate: 'clamp',
   });
 
   const marginTop = animation.interpolate({
     inputRange: [0, DISTANCE],
-    outputRange: ['70%', '0%'],
+    outputRange: ['50%', '0%'],
     extrapolate: 'clamp',
   });
 
@@ -82,7 +70,13 @@ const SeriesHeader = ({series, animation}) => {
 
   const marginRight = animation.interpolate({
     inputRange: [0, DISTANCE],
-    outputRange: [40, 20],
+    outputRange: [40, 10],
+    extrapolate: 'clamp',
+  });
+
+  const top = animation.interpolate({
+    inputRange: [0, DISTANCE],
+    outputRange: [15, 35],
     extrapolate: 'clamp',
   });
 
@@ -97,26 +91,27 @@ const SeriesHeader = ({series, animation}) => {
         <Image source={series.poster} style={styles.image} resizeMode="cover" />
         <AnimatedLinearGradient
           colors={['transparent', 'black']}
-          style={[StyleSheet.absoluteFill, styles.gradient(padding)]}>
+          style={[StyleSheet.absoluteFill, styles.gradient]}>
           <Animated.View
             style={[
               StyleSheet.absoluteFill,
               {backgroundColor: 'black', opacity},
             ]}
           />
-          <IconButton
-            size={28}
-            icon="arrow-left"
-            style={{position: 'absolute', top: 20, left: 10}}
-            onPress={() => navigation.goBack()}
-            color={Colors.grey300}
-          />
-          <Animated.Text style={styles.seriesTitle(fontSize1, marginTop)}>
-            {series.title}
-          </Animated.Text>
-          <Animated.Text style={styles.episodesNumber(fontSize2)}>
-            {series.episodes} Episode
-          </Animated.Text>
+          <Animated.View style={{position: 'absolute', top, left: 10}}>
+            <IconButton
+              size={28}
+              icon="arrow-left"
+              onPress={() => navigation.goBack()}
+              color={Colors.grey300}
+            />
+          </Animated.View>
+          <Animated.View style={styles.textContainer(marginTop, scale)}>
+            <Animated.Text style={styles.title}>{series.title}</Animated.Text>
+            <Animated.Text style={styles.episodes}>
+              {series.episodes} Episode
+            </Animated.Text>
+          </Animated.View>
         </AnimatedLinearGradient>
       </Animated.View>
       <AnimatedPressable
@@ -126,7 +121,7 @@ const SeriesHeader = ({series, animation}) => {
             episode: lastEpisode.length > 0 ? lastEpisode[0] : episodes[0],
           })
         }
-        style={styles.playBtn(marginRight)}>
+        style={styles.playBtn(marginRight, scale)}>
         <Icon name="play" size={36} color={colors.placeholder} />
       </AnimatedPressable>
     </Animated.View>
@@ -145,31 +140,36 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
-  gradient: padding => ({
-    paddingBottom: padding,
-    paddingHorizontal: 10,
+  gradient: {
     justifyContent: 'center',
+    paddingHorizontal: 10,
+    paddingTop: StatusBar.currentHeight / 2,
+  },
+
+  textContainer: (marginTop, scale) => ({
+    marginTop,
+    transform: [{scale}],
   }),
 
-  seriesTitle: (fontSize, marginTop) => ({
-    fontSize,
-    marginTop,
+  title: {
+    fontSize: 36,
     color: 'white',
     alignSelf: 'center',
     textAlign: 'center',
     fontFamily: 'YouTubeSansBold',
-  }),
+  },
 
-  episodesNumber: fontSize => ({
-    fontSize,
+  episodes: {
+    fontSize: 20,
     textAlign: 'center',
     color: Colors.grey400,
     marginTop: -5,
     fontFamily: 'YouTubeSansRegular',
-  }),
+  },
 
-  playBtn: marginRight => ({
+  playBtn: (marginRight, scale) => ({
     marginRight,
+    transform: [{scale}],
     padding: 15,
     borderRadius: 100,
     flexDirection: 'row',

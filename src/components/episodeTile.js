@@ -54,9 +54,9 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 18,
-    color: Colors.grey700,
+    color: Colors.grey800,
     textTransform: 'capitalize',
-    fontFamily: 'YouTubeSansSemibold',
+    fontFamily: 'YouTubeSansRegular',
   },
 
   description: {

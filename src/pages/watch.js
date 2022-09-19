@@ -17,15 +17,19 @@ const Watch = ({route}) => {
   );
   const series = useContext(SeriesContext).series[currentEpisode.seriesId];
   const bottomSheetRef = useRef(null);
+  const firstMount = useRef(true);
 
   useEffect(() => {
-    const episodeFromHistory = history.filter(
-      item => item.identifier === episode.identifier,
-    );
-    if (episodeFromHistory.length > 0) {
-      setCurrentEpisode(episodeFromHistory[0]);
+    if (firstMount.current) {
+      const episodeFromHistory = history.filter(
+        item => item.identifier === episode.identifier,
+      );
+      if (episodeFromHistory.length > 0) {
+        setCurrentEpisode(episodeFromHistory[0]);
+      }
+      firstMount.current = false;
     }
-  }, [history, episode.identifier]);
+  }, [episode, history]);
 
   const _handleIncomingVideo = mode => {
     const next = mode === 'next' ? +1 : -1;

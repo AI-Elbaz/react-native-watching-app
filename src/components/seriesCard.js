@@ -28,7 +28,7 @@ const SeriesCard = ({series}) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 420,
+    height: 430,
     borderRadius: 30,
     overflow: 'hidden',
   },
