@@ -3,9 +3,7 @@ import {StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {SeriesContext} from '../contexts/seriesContext';
 import {HistoryContext} from '../contexts/historyContext';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import Player from '../components/player';
-import PlayerOptions from '../components/playerOptions';
 import ExpandableText from '../components/expandableText';
 
 const Watch = ({route}) => {
@@ -16,7 +14,6 @@ const Watch = ({route}) => {
     ep => ep.seriesId === currentEpisode.seriesId,
   );
   const series = useContext(SeriesContext).series[currentEpisode.seriesId];
-  const bottomSheetRef = useRef(null);
   const firstMount = useRef(true);
 
   useEffect(() => {
@@ -41,15 +38,12 @@ const Watch = ({route}) => {
   };
 
   return (
-    <BottomSheetModalProvider>
+    <>
       <StatusBar backgroundColor="transparent" translucent />
-
       <Player
         episode={currentEpisode}
-        sheetRef={bottomSheetRef}
         handleIncomingVideo={_handleIncomingVideo}
       />
-
       <ScrollView style={styles.container}>
         <View style={{paddingHorizontal: 15, paddingVertical: 10}}>
           <Text style={styles.seriesName}>
@@ -66,8 +60,7 @@ const Watch = ({route}) => {
           )}
         </View>
       </ScrollView>
-      <PlayerOptions sheetRef={bottomSheetRef} />
-    </BottomSheetModalProvider>
+    </>
   );
 };
 

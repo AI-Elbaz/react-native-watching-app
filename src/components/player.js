@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {ActivityIndicator, Colors} from 'react-native-paper';
 import {TapGestureHandler, State} from 'react-native-gesture-handler';
+import {SheetManager} from 'react-native-actions-sheet';
 import Video from 'react-native-video';
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/Feather';
@@ -16,7 +17,7 @@ import Orientation from 'react-native-orientation-locker';
 import {HistoryContext} from '../contexts/historyContext';
 import {PlayerOptionsContext} from '../contexts/playerOptionsContext';
 
-const Player = ({episode, handleIncomingVideo, sheetRef}) => {
+const Player = ({episode, handleIncomingVideo}) => {
   const videoRef = useRef(null);
   const doubleTapRef = useRef();
   const Dimensions = useWindowDimensions();
@@ -313,7 +314,7 @@ const Player = ({episode, handleIncomingVideo, sheetRef}) => {
                 </Pressable>
                 {sources && (
                   <Pressable
-                    onPress={() => sheetRef.current.present()}
+                    onPress={() => SheetManager.show('player-options')}
                     style={{marginRight: 16}}
                     android_ripple={{
                       foreground: true,

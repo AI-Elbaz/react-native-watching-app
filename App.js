@@ -1,6 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {SheetProvider} from 'react-native-actions-sheet';
+import './src/components/actionSheets';
 
 import {
   Colors,
@@ -37,24 +39,32 @@ export default function App() {
         <HistoryContextProvider>
           <SeriesContextProvider>
             <PaperProvider theme={theme}>
-              <NavigationContainer>
-                <Stack.Navigator
-                  screenOptions={{headerShown: false, orientation: 'portrait'}}>
-                  <Stack.Screen name="Home" component={Home} />
-                  <Stack.Screen
-                    name="History"
-                    component={History}
-                    options={{headerShown: true, headerRight: HistoryDeleteBtn}}
-                  />
-                  <Stack.Screen name="Search" component={Search} />
-                  <Stack.Screen name="Series" component={Series} />
-                  <Stack.Screen
-                    name="Watch"
-                    component={Watch}
-                    options={{orientation: 'all'}}
-                  />
-                </Stack.Navigator>
-              </NavigationContainer>
+              <SheetProvider>
+                <NavigationContainer>
+                  <Stack.Navigator
+                    screenOptions={{
+                      headerShown: false,
+                      orientation: 'portrait',
+                    }}>
+                    <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen
+                      name="History"
+                      component={History}
+                      options={{
+                        headerShown: true,
+                        headerRight: HistoryDeleteBtn,
+                      }}
+                    />
+                    <Stack.Screen name="Search" component={Search} />
+                    <Stack.Screen name="Series" component={Series} />
+                    <Stack.Screen
+                      name="Watch"
+                      component={Watch}
+                      options={{orientation: 'all'}}
+                    />
+                  </Stack.Navigator>
+                </NavigationContainer>
+              </SheetProvider>
             </PaperProvider>
           </SeriesContextProvider>
         </HistoryContextProvider>
