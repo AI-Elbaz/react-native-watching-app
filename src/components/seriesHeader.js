@@ -58,7 +58,7 @@ const SeriesHeader = ({series, animation}) => {
 
   const StatusBarPadding = animation.interpolate({
     inputRange: [0, DISTANCE],
-    outputRange: [StatusBar.currentHeight, 0],
+    outputRange: [StatusBar.currentHeight + 10, 0],
     extrapolate: 'clamp',
   });
 

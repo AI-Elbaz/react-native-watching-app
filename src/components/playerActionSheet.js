@@ -79,7 +79,7 @@ export const PlayerOptionsSheet = () => {
       <FlatList
         data={items}
         ListHeaderComponent={
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <IconButton icon="arrow-left" onPress={onDismiss} />
             <Text style={styles.title}>{title}</Text>
           </View>
@@ -98,11 +98,14 @@ export const PlayerOptionsSheet = () => {
   };
 
   return (
-    <ActionSheet id="player-options" containerStyle={{}} gestureEnabled>
+    <ActionSheet
+      id="player-options"
+      containerStyle={{paddingBottom: 10}}
+      gestureEnabled>
       {!showQualities && !showSpeeds && <Default />}
       {showQualities && (
         <Options
-          title="Qualities"
+          title="Quality"
           items={availableQualities}
           activeItem={options.quality}
           onDismiss={() => setShowQualities(false)}
@@ -126,11 +129,11 @@ export const PlayerOptionsSheet = () => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 30,
+    fontSize: 24,
     marginBottom: 8,
     paddingHorizontal: 16,
-    color: Colors.grey800,
-    fontFamily: 'YouTubeSansSemibold',
+    color: Colors.grey900,
+    fontFamily: 'YouTubeSansRegular',
   },
 
   tile: {
@@ -145,15 +148,15 @@ const styles = StyleSheet.create({
   },
 
   tileText: {
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: 20,
-    color: Colors.grey700,
+    color: Colors.grey800,
     fontFamily: 'YouTubeSansRegular',
   },
 
   tileValue: {
     fontSize: 16,
-    color: Colors.grey600,
+    color: Colors.grey700,
     fontFamily: 'YouTubeSansRegular',
   },
 });
