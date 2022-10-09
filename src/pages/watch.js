@@ -5,11 +5,14 @@ import {SeriesContext} from '../contexts/seriesContext';
 import {HistoryContext} from '../contexts/historyContext';
 import Player from '../components/player';
 import ExpandableText from '../components/expandableText';
+import {PlayerOptionsContext} from '../contexts/playerOptionsContext';
 
 const Watch = ({route}) => {
   const {episode} = route.params;
+  const [videoSize, setVideoSize] = useState(null);
   const [currentEpisode, setCurrentEpisode] = useState(episode);
   const {history} = useContext(HistoryContext);
+  const {source} = useContext(PlayerOptionsContext);
   const episodes = useContext(SeriesContext).episodes.filter(
     ep => ep.seriesId === currentEpisode.seriesId,
   );
@@ -27,6 +30,17 @@ const Watch = ({route}) => {
       firstMount.current = false;
     }
   }, [episode, history]);
+
+  useEffect(() => {
+    if (source) {
+      _getVideoSize(source.file).then(setVideoSize);
+    }
+  }, [source]);
+
+  const _getVideoSize = async url => {
+    const re = await fetch(url, {method: 'HEAD'});
+    return (re.headers.map['content-length'] * 0.00000095367432).toFixed(1);
+  };
 
   const _handleIncomingVideo = mode => {
     const next = mode === 'next' ? +1 : -1;
@@ -47,7 +61,11 @@ const Watch = ({route}) => {
       <ScrollView style={styles.container}>
         <View style={{paddingHorizontal: 15, paddingVertical: 10}}>
           <Text style={styles.seriesName}>
-            {series.title} | E{currentEpisode.id.toString().padStart(2, '0')}
+            {[
+              series.title,
+              `E${currentEpisode.id.toString().padStart(2, '0')}`,
+              videoSize && `${videoSize} MB`,
+            ].join(' | ')}
           </Text>
           <Text style={styles.title}>{currentEpisode.title}</Text>
           {useMemo(

@@ -33,7 +33,7 @@ const Player = ({episode, handleIncomingVideo}) => {
   const [negativeTime, setNegativeTime] = useState(false);
   const componentWillUnmount = useRef(false);
   const {addToHistory} = useContext(HistoryContext);
-  const {options, setAvailableQualities, availableQualities} =
+  const {options, setAvailableQualities, availableQualities, setSource} =
     useContext(PlayerOptionsContext);
 
   const _getData = async ep => {
@@ -96,9 +96,10 @@ const Player = ({episode, handleIncomingVideo}) => {
       const qualityIndex = availables.indexOf(options.quality);
       const final = qualityIndex > -1 ? qualityIndex : qualityIndex - 1;
 
+      setSource(sources[final]);
       setCurrentSource(sources[final]);
     }
-  }, [sources, options.quality, setAvailableQualities]);
+  }, [sources, options.quality, setAvailableQualities, setSource]);
 
   useEffect(() => {
     setVideoLoading(true);
