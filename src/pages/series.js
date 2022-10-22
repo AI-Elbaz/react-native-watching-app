@@ -1,65 +1,112 @@
-import {useContext, useRef} from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StatusBar,
-  StyleSheet,
-  Animated,
-} from 'react-native';
-import {Colors} from 'react-native-paper';
+import {useContext} from 'react';
+import {View, Text, StatusBar, StyleSheet} from 'react-native';
+import {Button, Colors} from 'react-native-paper';
 import EpisodeTile from '../components/episodeTile';
 import SeriesHeader from '../components/seriesHeader';
 import {SeriesContext} from '../contexts/seriesContext';
+import {HistoryContext} from '../contexts/historyContext';
+import LinearGradient from 'react-native-linear-gradient';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFlatList,
+  BottomSheetFooter,
+} from '@gorhom/bottom-sheet';
 
-const Series = ({route}) => {
+const Series = ({route, navigation}) => {
   const {series} = route.params;
+  const {history} = useContext(HistoryContext);
+
   const episodes = useContext(SeriesContext).episodes.filter(
     ep => ep.seriesId === series.id,
   );
 
-  const animation = useRef(new Animated.Value(0)).current;
+  const lastEpisode = history.filter(
+    ep => ep.seriesId === series.id && ep.watchPercentage !== 1,
+  );
+
+  const CustomBackdrop = props => {
+    return (
+      <BottomSheetBackdrop
+        {...props}
+        enableTouchThrough={false}
+        pressBehavior="none"
+      />
+    );
+  };
+
+  const CustomFooter = props => {
+    return (
+      <BottomSheetFooter {...props} style={{backgroundColor: 'transparent'}}>
+        <LinearGradient colors={['transparent', 'white']} style={{padding: 20}}>
+          <Button
+            onPress={() =>
+              navigation.navigate('Watch', {
+                episode: lastEpisode.length > 0 ? lastEpisode[0] : episodes[0],
+              })
+            }
+            mode="contained"
+            color={Colors.grey900}
+            labelStyle={{fontSize: 18}}
+            contentStyle={{padding: 4}}
+            style={{alignSelf: 'center'}}>
+            Watch Now
+          </Button>
+        </LinearGradient>
+      </BottomSheetFooter>
+    );
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar backgroundColor="transparent" animated translucent />
-      <FlatList
-        data={episodes}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{nativeEvent: {contentOffset: {y: animation}}}],
-          {useNativeDriver: false},
-        )}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-          <SeriesHeader series={series} animation={animation} />
-        }
-        stickyHeaderIndices={[0]}
-        keyExtractor={item => item.id}
-        renderItem={({item, index}) => {
-          if (index === 0) {
-            return (
-              <>
-                <Text style={styles.description}>{series.description}</Text>
-                <EpisodeTile key={item.id} episode={item} />
-              </>
-            );
+      <SeriesHeader series={series} />
+      <BottomSheet
+        snapPoints={['60%', '89%']}
+        handleComponent={null}
+        backdropComponent={CustomBackdrop}
+        footerComponent={CustomFooter}
+        style={{
+          borderTopRightRadius: 40,
+          borderTopLeftRadius: 40,
+          overflow: 'hidden',
+        }}>
+        <BottomSheetFlatList
+          data={episodes}
+          keyExtractor={item => item.identifier}
+          renderItem={({item}) => <EpisodeTile key={item.id} episode={item} />}
+          ListHeaderComponent={
+            <View style={styles.header}>
+              <Text style={styles.title}>{series.title}</Text>
+              <Text style={styles.episodes}>{series.episodes} Episode</Text>
+              <Text style={styles.description}>{series.description}</Text>
+            </View>
           }
-          return <EpisodeTile key={item.id} episode={item} />;
-        }}
-      />
+        />
+      </BottomSheet>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  header: {
+    marginVertical: 20,
+    paddingHorizontal: 30,
+  },
+  title: {
+    fontSize: 36,
+    color: Colors.grey800,
+    fontFamily: 'YouTubeSansSemibold',
+  },
+  episodes: {
+    fontSize: 20,
+    lineHeight: 22,
+    color: Colors.grey500,
+    fontFamily: 'YouTubeSansRegular',
+  },
   description: {
     fontSize: 16,
-    textAlign: 'center',
-    marginTop: 20,
-    marginBottom: 20,
-    paddingHorizontal: 20,
     color: Colors.grey600,
+    marginTop: 12,
     fontFamily: 'YouTubeSansRegular',
   },
 });

@@ -16,7 +16,7 @@ const EpisodeTile = ({episode}) => {
       <View
         style={{
           ...styles.container,
-          backgroundColor: (episode.id - 1) % 2 ? Colors.grey50 : 'transparent',
+          backgroundColor: (episode.id - 1) % 2 ? Colors.grey50 : 'white',
         }}>
         <Text style={styles.episodeNumber}>
           {episode.id.toString().padStart(2, '0')}
