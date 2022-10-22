@@ -10,7 +10,7 @@ const SeriesList = () => {
   return (
     <Carousel
       data={series}
-      itemWidth={310}
+      itemWidth={Dimensions.get('window').width / 1.267}
       containerCustomStyle={{flexGrow: 0}}
       sliderWidth={Dimensions.get('window').width}
       renderItem={({item}) => <SeriesCard key={item.id} series={item} />}

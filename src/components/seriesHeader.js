@@ -1,4 +1,4 @@
-import {StyleSheet, Image, View, Text} from 'react-native';
+import {StyleSheet, Image, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Colors, IconButton} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';

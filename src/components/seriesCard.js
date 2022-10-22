@@ -1,4 +1,4 @@
-import {Text, Pressable, StyleSheet, Image} from 'react-native';
+import {Text, Pressable, StyleSheet, Image, Dimensions} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -28,7 +28,7 @@ const SeriesCard = ({series}) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 430,
+    height: Dimensions.get('window').height / 1.8,
     borderRadius: 30,
     overflow: 'hidden',
   },
