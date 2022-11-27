@@ -1,5 +1,5 @@
 import {useState, useContext, useEffect, useRef, useMemo} from 'react';
-import {StyleSheet, Text, View, ScrollView, StatusBar} from 'react-native';
+import {StyleSheet, Text, ScrollView, StatusBar} from 'react-native';
 import {Colors} from 'react-native-paper';
 import {SeriesContext} from '../contexts/seriesContext';
 import {HistoryContext} from '../contexts/historyContext';
@@ -59,24 +59,22 @@ const Watch = ({route}) => {
         handleIncomingVideo={_handleIncomingVideo}
       />
       <ScrollView style={styles.container}>
-        <View style={{paddingHorizontal: 15, paddingVertical: 10}}>
-          <Text style={styles.seriesName}>
-            {[
-              series.title,
-              `E${currentEpisode.id.toString().padStart(2, '0')}`,
-              videoSize && `${videoSize} MB`,
-            ].join(' | ')}
-          </Text>
-          <Text style={styles.title}>{currentEpisode.title}</Text>
-          {useMemo(
-            () => (
-              <ExpandableText numberOfLines={4} style={styles.description}>
-                {currentEpisode.description}
-              </ExpandableText>
-            ),
-            [currentEpisode.description],
-          )}
-        </View>
+        <Text style={styles.seriesName}>
+          {[
+            series.title,
+            `E${currentEpisode.id.toString().padStart(2, '0')}`,
+            videoSize && `${videoSize} MB`,
+          ].join(' | ')}
+        </Text>
+        <Text style={styles.title}>{currentEpisode.title}</Text>
+        {useMemo(
+          () => (
+            <ExpandableText numberOfLines={4} style={styles.description}>
+              {currentEpisode.description}
+            </ExpandableText>
+          ),
+          [currentEpisode.description],
+        )}
       </ScrollView>
     </>
   );
@@ -85,6 +83,8 @@ const Watch = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     backgroundColor: 'white',
   },
 

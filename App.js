@@ -1,5 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {enableScreens} from 'react-native-screens';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {SheetProvider} from 'react-native-actions-sheet';
 import './src/components/actionSheets';
@@ -19,6 +20,8 @@ import Search from './src/pages/search';
 import Series from './src/pages/series';
 import Watch from './src/pages/watch';
 import History, {HistoryDeleteBtn} from './src/pages/history';
+
+enableScreens();
 
 const Stack = createNativeStackNavigator();
 const theme = {

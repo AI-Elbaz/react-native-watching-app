@@ -21,7 +21,7 @@ const Series = ({route, navigation}) => {
   );
 
   const lastEpisode = history.filter(
-    ep => ep.seriesId === series.id && ep.watchPercentage !== 1,
+    ep => ep.seriesId === series.id && ep.watchPercentage !== 0,
   );
 
   const CustomBackdrop = props => {
@@ -56,6 +56,19 @@ const Series = ({route, navigation}) => {
     );
   };
 
+  const BottomSheetBackground = ({style}) => {
+    return (
+      <View
+        style={{
+          backgroundColor: 'white',
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          ...style,
+        }}
+      />
+    );
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <StatusBar backgroundColor="transparent" animated translucent />
@@ -63,17 +76,23 @@ const Series = ({route, navigation}) => {
       <BottomSheet
         snapPoints={['60%', '89%']}
         handleComponent={null}
+        backgroundComponent={BottomSheetBackground}
         backdropComponent={CustomBackdrop}
-        footerComponent={CustomFooter}
-        style={{
-          borderTopRightRadius: 40,
-          borderTopLeftRadius: 40,
-          overflow: 'hidden',
-        }}>
+        footerComponent={CustomFooter}>
         <BottomSheetFlatList
           data={episodes}
+          style={{marginTop: 40}}
           keyExtractor={item => item.identifier}
           renderItem={({item}) => <EpisodeTile key={item.id} episode={item} />}
+          ListFooterComponent={
+            <View
+              style={{
+                height: 85,
+                borderTopColor: Colors.grey200,
+                borderTopWidth: 1,
+              }}
+            />
+          }
           ListHeaderComponent={
             <View style={styles.header}>
               <Text style={styles.title}>{series.title}</Text>
@@ -89,7 +108,7 @@ const Series = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
   header: {
-    marginVertical: 20,
+    paddingBottom: 20,
     paddingHorizontal: 30,
   },
   title: {

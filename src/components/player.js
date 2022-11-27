@@ -16,6 +16,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import Orientation from 'react-native-orientation-locker';
 import {HistoryContext} from '../contexts/historyContext';
 import {PlayerOptionsContext} from '../contexts/playerOptionsContext';
+import {SeriesContext} from '../contexts/seriesContext';
+// import Slider from './slider';
 
 const Player = ({episode, handleIncomingVideo}) => {
   const videoRef = useRef(null);
@@ -33,6 +35,10 @@ const Player = ({episode, handleIncomingVideo}) => {
   const [negativeTime, setNegativeTime] = useState(false);
   const componentWillUnmount = useRef(false);
   const {addToHistory} = useContext(HistoryContext);
+  const videoEnded = useRef(false);
+  const lastEpisode = useContext(SeriesContext).episodes.filter(
+    i => i.seriesId === episode.seriesId,
+  ).length;
   const {options, setAvailableQualities, availableQualities, setSource} =
     useContext(PlayerOptionsContext);
 
@@ -64,7 +70,7 @@ const Player = ({episode, handleIncomingVideo}) => {
   const _handleAddToHistory = useCallback(() => {
     if (!videoLoading && currentTime >= duration * 0.01) {
       const percentage = currentTime / duration;
-      episode.watchPercentage = percentage >= 0.95 ? 1 : percentage;
+      episode.watchPercentage = percentage >= 0.95 ? 0 : percentage;
       addToHistory(episode);
     }
   }, [videoLoading, currentTime, episode, addToHistory, duration]);
@@ -90,6 +96,8 @@ const Player = ({episode, handleIncomingVideo}) => {
 
   useEffect(() => {
     if (sources.length > 0) {
+      setCurrentTime(0);
+      videoEnded.current = false;
       const availables = sources.map(source => source.label);
       setAvailableQualities(availables);
 
@@ -152,7 +160,7 @@ const Player = ({episode, handleIncomingVideo}) => {
     setDuration(data.duration);
     if (episode.watchPercentage && !currentTime) {
       const percentage = episode.watchPercentage;
-      const time = percentage === 1 ? 0 : percentage * data.duration;
+      const time = percentage === 0 ? 0 : percentage * data.duration;
       videoRef.current.seek(time);
       setCurrentTime(time);
     }
@@ -170,16 +178,22 @@ const Player = ({episode, handleIncomingVideo}) => {
   const _handleIncomingVideo = mode => {
     _handleAddToHistory();
     setVideoLoading(true);
-    setCurrentTime(0);
     handleIncomingVideo(mode);
   };
 
   const _handleVideoEnd = () => {
-    if (options.autoPlay) {
-      _handleIncomingVideo('next');
-    }
-    if (!options.repeat && !options.autoPlay) {
-      setPaused(true);
+    if (!videoEnded.current) {
+      if (options.autoPlay && episode.id !== lastEpisode) {
+        _handleIncomingVideo('next');
+      }
+      if (
+        (!options.repeat && !options.autoPlay) ||
+        episode.id === lastEpisode
+      ) {
+        setPaused(true);
+        setShowControls(true);
+      }
+      videoEnded.current = true;
     }
   };
 
@@ -281,24 +295,32 @@ const Player = ({episode, handleIncomingVideo}) => {
               </Pressable>
 
               <Pressable
+                disabled={episode.id === lastEpisode}
                 onPress={() => _handleIncomingVideo('next')}
                 style={{
                   backgroundColor: '#00000066',
                   padding: 12,
                   borderRadius: 50,
+                  opacity: episode.id === lastEpisode ? 0.5 : null,
                   overflow: 'hidden',
                 }}
                 android_ripple={{foreground: true, borderless: false}}>
                 <Icon name="skip-forward" size={20} color="white" />
               </Pressable>
             </View>
-            <View style={styles.bar}>
+            <View
+              style={[
+                styles.bar,
+                fullscreen
+                  ? {flexDirection: 'column-reverse', padding: 10}
+                  : null,
+              ]}>
               <View
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
                   paddingHorizontal: fullscreen ? 24 : 12,
-                  paddingBottom: 5,
+                  paddingBottom: 8,
                 }}>
                 <Pressable
                   onPress={() => setNegativeTime(prev => !prev)}
@@ -316,7 +338,6 @@ const Player = ({episode, handleIncomingVideo}) => {
                 {sources && (
                   <Pressable
                     onPress={() => SheetManager.show('player-options')}
-                    style={{marginRight: 16}}
                     android_ripple={{
                       foreground: true,
                       borderless: true,
@@ -327,6 +348,7 @@ const Player = ({episode, handleIncomingVideo}) => {
                 )}
                 <Pressable
                   onPress={() => setFullscreen(prev => !prev)}
+                  style={{marginRight: 8, marginLeft: 20}}
                   android_ripple={{
                     foreground: true,
                     borderless: true,
@@ -339,18 +361,23 @@ const Player = ({episode, handleIncomingVideo}) => {
                   />
                 </Pressable>
               </View>
-              <Slider
-                value={currentTime}
-                minimumValue={0}
-                maximumValue={duration}
-                onSlidingStart={() => setIsSliding(true)}
-                onValueChange={v => setCurrentTime(v)}
-                onSlidingComplete={_handleSliderComplete}
-                style={{width: '100%'}}
-                thumbTintColor={Colors.red600}
-                minimumTrackTintColor={Colors.red600}
-                maximumTrackTintColor="white"
-              />
+              <View
+                style={
+                  fullscreen ? null : {marginHorizontal: -16, marginBottom: -8}
+                }>
+                <Slider
+                  value={currentTime}
+                  minimumValue={0}
+                  maximumValue={duration}
+                  onSlidingStart={() => setIsSliding(true)}
+                  onValueChange={v => setCurrentTime(v)}
+                  onSlidingComplete={_handleSliderComplete}
+                  style={{width: '100%'}}
+                  thumbTintColor={Colors.red600}
+                  minimumTrackTintColor={Colors.red600}
+                  maximumTrackTintColor="white"
+                />
+              </View>
             </View>
           </View>
         )}
@@ -361,7 +388,7 @@ const Player = ({episode, handleIncomingVideo}) => {
 
 const styles = StyleSheet.create({
   container: {
-    overflow: 'hidden',
+    zIndex: 1,
     backgroundColor: 'black',
   },
 
@@ -377,7 +404,6 @@ const styles = StyleSheet.create({
   bar: {
     bottom: 0,
     width: '100%',
-    paddingBottom: 10,
     position: 'absolute',
   },
 });

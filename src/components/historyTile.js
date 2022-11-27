@@ -10,7 +10,7 @@ const HistoryTile = ({episode, seriesName}) => {
       android_ripple={{foreground: true, borderless: false}}
       style={styles.container}
       onPress={() => navigation.navigate('Watch', {episode})}>
-      {episode.watchPercentage && episode.watchPercentage !== 1 && (
+      {episode.watchPercentage !== undefined && episode.watchPercentage !== 1 && (
         <View style={styles.progressbarContainer}>
           <View
             style={{

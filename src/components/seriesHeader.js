@@ -20,6 +20,7 @@ const SeriesHeader = ({series}) => {
           <IconButton
             size={28}
             icon="arrow-left"
+            style={{zIndex: 1}}
             onPress={() => navigation.goBack()}
             color={Colors.grey300}
           />
